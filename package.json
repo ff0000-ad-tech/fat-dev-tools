@@ -1,0 +1,29 @@
+{
+  "name": "fat-dev-tools",
+  "version": "1.0.0",
+  "description": "FF0000 Ad Tech - Developer Tools ===============",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "sniff-git-links": "./bin/sniff-git-links.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ff0000-ad-tech/fat-dev-tools.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.2.1",
+    "debug": "^3.1.0",
+    "glob": "^7.1.2",
+    "lodash": "^4.17.5"
+  },
+  "bugs": {
+    "url": "https://github.com/ff0000-ad-tech/fat-dev-tools/issues"
+  },
+  "homepage": "https://github.com/ff0000-ad-tech/fat-dev-tools#readme"
+}
