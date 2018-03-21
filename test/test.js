@@ -2,19 +2,19 @@ import test from 'ava'
 import path from 'path'
 import curry from 'lodash/curry'
 
-import findFatGitLinks from '../lib/find-fat-git-links'
+import findFatGitInfo from '../lib/find-fat-git-info'
 
-const assertDir = curry(function assertDir(t, gitLinkDeps, suffix, expectedDeps) {
-	const key = Object.keys(gitLinkDeps).find(key => key.endsWith(suffix))
+const assertDir = curry(function assertDir(t, gitInfoByDir, suffix, expectedDeps) {
+	const key = Object.keys(gitInfoByDir).find(key => key.endsWith(suffix))
 	t.truthy(key)
 
-	const actualDeps = gitLinkDeps[key]
+	const actualDeps = gitInfoByDir[key] && gitInfoByDir[key].gitLinkDeps
 	t.deepEqual(actualDeps, expectedDeps, `${suffix} doesn't have expected dependencies`)
 })
 
 test('Finds Git linked dependencies recursively', t => {
-	const gitLinkDeps = findFatGitLinks(path.resolve(__dirname, 'fixtures/parent'))
-	const assertDirWithDeps = assertDir(t, gitLinkDeps)
+	const gitInfoByDir = findFatGitInfo(path.resolve(__dirname, 'fixtures/parent'))
+	const assertDirWithDeps = assertDir(t, gitInfoByDir)
 	
 	assertDirWithDeps('/parent', {
 		hello: 'hello.git'
@@ -29,19 +29,29 @@ test('Finds Git linked dependencies recursively', t => {
 	})
 })
 
-test.todo('Includes cloned repos (i.e. has .git folder)')
+test('Includes cloned repos (i.e. has .git folder)', t => {
+	const gitInfoByDir = findFatGitInfo(path.resolve(__dirname, 'fixtures/gitRepo'))
+
+	const gitRepoKey = Object.keys(gitInfoByDir).find(key => key.includes('gitRepo'))
+	const gitRepoInfo = gitInfoByDir[gitRepoKey]
+
+	t.deepEqual(gitRepoInfo, {
+		gitLinkDeps: {},
+		hasGit: true
+	})
+})
 
 test('Allows exclusion globs', t => {
-	const gitLinkDeps = findFatGitLinks(path.resolve(__dirname, 'fixtures/parent'), {
+	const gitInfoByDir = findFatGitInfo(path.resolve(__dirname, 'fixtures/parent'), {
 		excludes: '**/child'
 	})
 
-	assertDir(t, gitLinkDeps, '/parent', {
+	assertDir(t, gitInfoByDir, '/parent', {
 		hello: 'hello.git'
 	})
 
-	const childKey = Object.keys(gitLinkDeps).find(key => key.endsWith('/child'))
-	const grandchildKey = Object.keys(gitLinkDeps).find(key => key.endsWith('/grandchild'))
+	const childKey = Object.keys(gitInfoByDir).find(key => key.endsWith('/child'))
+	const grandchildKey = Object.keys(gitInfoByDir).find(key => key.endsWith('/grandchild'))
 
 	t.falsy(childKey)
 	t.falsy(grandchildKey)
@@ -49,12 +59,12 @@ test('Allows exclusion globs', t => {
 
 test('Ignores SyntaxErrors when parsing invalid JSON', t => {
 	t.notThrows(() => {
-		findFatGitLinks(path.resolve(__dirname, 'fixtures/invalid'))
+		findFatGitInfo(path.resolve(__dirname, 'fixtures/invalid'))
 	})
 })
 
 test('Ignores ENOENT erros when if no package.json present', t => {
 	t.notThrows(() => {
-		findFatGitLinks(path.resolve(__dirname, 'fixtures/no-package'))
+		findFatGitInfo(path.resolve(__dirname, 'fixtures/no-package'))
 	})
 })

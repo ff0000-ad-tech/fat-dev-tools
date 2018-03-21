@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const argv = require('minimist')(process.argv.slice(2))
 const colors = require('colors/safe')
-const findFatGitLinks = require('../lib/find-fat-git-links.js')
+const findFatGitInfo = require('../lib/find-fat-git-info.js')
 
 const target = (
 	// first CLI arg
@@ -12,18 +12,33 @@ const target = (
 	|| process.cwd()
 )
 
-const gitLinkDepsByDir = findFatGitLinks(target, {
+const gitInfoByDir = findFatGitInfo(target, {
 	excludes: argv.excludes
 })
 
-Object.keys(gitLinkDepsByDir).forEach(dirPath => {
+function showGitLink(depName, gitLink) {
+	const styledDepName = colors.green(depName)
+	const styledGitLink = colors.yellow(gitLink)
+	console.log(`${styledDepName} => ${styledGitLink}`)
+}
+
+function showDeps(deps) {
+	Object.keys(deps).forEach(depName => {
+		const gitLink = deps[depName]
+		showGitLink(depName, gitLink)
+	})
+}
+
+Object.keys(gitInfoByDir).forEach(dirPath => {
 	console.log()
 	console.log(colors.blue.underline(dirPath))
-	const gitLinkDeps = gitLinkDepsByDir[dirPath]
-	Object.keys(gitLinkDeps).forEach(depName => {
-		const gitLink = gitLinkDeps[depName]
-		const styledDepName = colors.green(depName)
-		const styledGitLink = colors.yellow(gitLink)
-		console.log(`${styledDepName} => ${styledGitLink}`)
-	})
+	const { hasGit, gitLinkDeps } = gitInfoByDir[dirPath]
+	
+	if (hasGit) {
+		console.log(colors.magenta('This is a cloned or working repo, since it has a .git directory'))
+	}
+
+	if (Object.keys(gitLinkDeps).length) {
+		showDeps(gitLinkDeps)
+	}
 })
