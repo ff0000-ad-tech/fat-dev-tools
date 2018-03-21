@@ -3,7 +3,14 @@ const argv = require('minimist')(process.argv.slice(2))
 const colors = require('colors/safe')
 const findFatGitLinks = require('../lib/find-fat-git-links.js')
 
-const gitLinkDepsByDir = findFatGitLinks(argv.context || process.cwd())
+const gitLinkDepsByDir = findFatGitLinks(
+	// first CLI arg
+	(argv._ && argv._[0])
+	// thru --context 
+	|| argv.context
+	// default to cwd
+	|| process.cwd()
+)
 
 Object.keys(gitLinkDepsByDir).forEach(dirPath => {
 	console.log()
