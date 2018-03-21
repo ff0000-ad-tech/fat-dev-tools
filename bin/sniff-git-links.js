@@ -12,7 +12,9 @@ const target = (
 	|| process.cwd()
 )
 
-const gitLinkDepsByDir = findFatGitLinks(target, argv.excludes)
+const gitLinkDepsByDir = findFatGitLinks(target, {
+	excludes: argv.excludes
+})
 
 Object.keys(gitLinkDepsByDir).forEach(dirPath => {
 	console.log()

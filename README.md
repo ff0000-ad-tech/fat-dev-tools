@@ -23,4 +23,4 @@ If none provided, defaults to current working directory
 
 `excludes` - a comma-separated list of globs to exclude. Should be surrounded by single quotes to send unexpanded glob string directly to script. For example:
 
-`sniff-git-links --excludes '**/node_modules/**, **/useless_repo'`
+`sniff-git-links --excludes '**/node_modules, **/useless_repo'`

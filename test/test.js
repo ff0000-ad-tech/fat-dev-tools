@@ -29,6 +29,8 @@ test('Finds Git linked dependencies recursively', t => {
 	})
 })
 
+test.todo('Includes cloned repos (i.e. has .git folder)')
+
 test('Allows exclusion globs', t => {
 	const gitLinkDeps = findFatGitLinks(path.resolve(__dirname, 'fixtures/parent'), {
 		excludes: '**/child'
