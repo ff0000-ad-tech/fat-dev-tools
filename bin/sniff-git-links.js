@@ -8,7 +8,7 @@ const pick = require('lodash/pick')
 const colors = require('colors/safe')
 
 function isGitLink(version) {
-	return /\.git(#[\w-]*)?$/.test(version)
+	return /\.git(#[\w\d-]*)?$/.test(version)
 }
 
 function isFAT(depName) {
