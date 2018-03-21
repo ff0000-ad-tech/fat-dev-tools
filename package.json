@@ -4,7 +4,7 @@
   "description": "FF0000 Ad Tech - Developer Tools ===============",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "DEBUG=fat ava test/test.js"
   },
   "bin": {
     "sniff-git-links": "./bin/sniff-git-links.js"
@@ -26,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/ff0000-ad-tech/fat-dev-tools/issues"
   },
-  "homepage": "https://github.com/ff0000-ad-tech/fat-dev-tools#readme"
+  "homepage": "https://github.com/ff0000-ad-tech/fat-dev-tools#readme",
+  "devDependencies": {
+    "ava": "^0.25.0"
+  }
 }
