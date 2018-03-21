@@ -63,7 +63,7 @@ test('Ignores SyntaxErrors when parsing invalid JSON', t => {
 	})
 })
 
-test('Ignores ENOENT erros when if no package.json present', t => {
+test('Ignores ENOENT errors when if no package.json present', t => {
 	t.notThrows(() => {
 		findFatGitInfo(path.resolve(__dirname, 'fixtures/no-package'))
 	})
