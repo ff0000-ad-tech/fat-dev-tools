@@ -47,10 +47,10 @@ function findGitLinksInDirectories(dirs) {
 		}, {})
 }
 
-function findFatGitLinks() {
-	const files = fs.readdirSync(process.cwd())
+function findFatGitLinks(target) {
+	const files = fs.readdirSync(target)
 	const dirPaths = files
-		.map(file => path.resolve(process.cwd(), file))
+		.map(file => path.resolve(target, file))
 		.filter(filepath => {
 			const stats = fs.statSync(filepath)
 			return stats.isDirectory()
@@ -69,5 +69,3 @@ function findFatGitLinks() {
 		})
 	})
 }
-
-findFatGitLinks()
