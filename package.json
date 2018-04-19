@@ -1,5 +1,5 @@
 {
-	"name": "fat-dev-tools",
+	"name": "@ff0000-ad-tech/fat-dev-tools",
 	"publishConfig": {
 		"access": "public"
 	},
