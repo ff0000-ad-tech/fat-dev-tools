@@ -29,7 +29,7 @@ test('Finds Git linked dependencies recursively', t => {
 	})
 })
 
-test('Includes cloned repos (i.e. has .git folder)', t => {
+test.skip('Includes cloned repos (i.e. has .git folder)', t => {
 	const gitInfoByDir = findFatGitInfo(path.resolve(__dirname, 'fixtures/gitRepo'))
 
 	const gitRepoKey = Object.keys(gitInfoByDir).find(key => key.includes('gitRepo'))
