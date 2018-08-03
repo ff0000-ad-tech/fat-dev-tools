@@ -5,7 +5,6 @@
 	},
 	"version": "1.0.3",
 	"description": "FF0000 Ad Tech - Developer Tools",
-	"main": "index.js",
 	"scripts": {
 		"pub": "np",
 		"test": "DEBUG=fat ava test/test.js"
