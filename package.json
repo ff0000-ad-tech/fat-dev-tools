@@ -11,7 +11,8 @@
 		"test": "DEBUG=fat ava test/test.js"
 	},
 	"bin": {
-		"sniff-git-links": "./bin/sniff-git-links.js"
+		"sniff-git-links": "./bin/sniff-git-links.js",
+		"push-file-changes": "./bin/push-file-changes.js"
 	},
 	"repository": {
 		"type": "git",
