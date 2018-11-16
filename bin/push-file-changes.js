@@ -42,7 +42,7 @@ function writeToUpdatingFile(data) {
 		if (err) {
 			throw err
 		}
-		console.log(colors.green('File updated'))
+		console.log(colors.green(`${(new Date()).toLocaleTimeString()}: File updated`))
 	})
 }
 
